@@ -1,4 +1,6 @@
 import java.util.*;
+import java.util.stream.*;
+import java.util.function.Function;
 
 
 interface Executor {
@@ -40,13 +42,15 @@ class Calculator {
         private final Executor evaluator;
         private final Executor applier;
         private final String signature;
+        private static Map<String, Operator> opMap = 
+        	Stream.of(values()).collect(Collectors.toMap(v -> v.signature, Function.identity()));
         
         Operator(String signature, Executor evaluator, Executor applier) {
             this.signature = signature;
             this.evaluator = evaluator;
             this.applier = applier;
         }
-        
+
         public void eval() {
             evaluator.exec();
         }
@@ -55,15 +59,8 @@ class Calculator {
             applier.exec();
         }
         
-        public static Operator get(String s) {
-            for (Operator op : values()) {
-                if (op.signature.equals(s)) {
-                    return op;
-                }
-            }
-            
-            return null;
-        
+        public static Operator fromString(String s) {
+            return opMap.get(s);
         }
         
     }
@@ -78,7 +75,7 @@ class Calculator {
 			if (sc.hasNextInt()) {
 				nums.push(sc.nextInt());
 			} else {
-				Operator.get(sc.next()).eval();
+				Operator.fromString(sc.next()).eval();
             }
 		}
 
