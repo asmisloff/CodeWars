@@ -1,3 +1,5 @@
+package ru.asmisloff.codewars.Calculator;
+
 import java.util.*;
 import java.util.stream.*;
 import java.util.function.Function;
