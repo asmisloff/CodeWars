@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 
 interface Executor {
-    public void exec();
+    void exec();
 }
 
 class Calculator {
@@ -44,7 +44,7 @@ class Calculator {
         private final Executor evaluator;
         private final Executor applier;
         private final String signature;
-        private static Map<String, Operator> opMap = 
+        private static final Map<String, Operator> opMap =
         	Stream.of(values()).collect(Collectors.toMap(v -> v.signature, Function.identity()));
         
         Operator(String signature, Executor evaluator, Executor applier) {
@@ -67,8 +67,8 @@ class Calculator {
         
     }
     
-	private static Stack<Integer> nums = new Stack<>();
-	private static Stack<Operator> ops = new Stack<>();
+	private static final Stack<Integer> nums = new Stack<>();
+	private static final Stack<Operator> ops = new Stack<>();
 
 	public static void eval(String exp) {
 		Scanner sc = new Scanner(exp);

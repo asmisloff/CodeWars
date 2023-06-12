@@ -11,7 +11,7 @@ public class BefungeInterpreter {
         LEFT, RIGHT, UP, DOWN
     }
 
-    class Index {
+    static class Index {
 
         private int row, col; // indexes of current row and column
         private Direction d;
@@ -53,19 +53,17 @@ public class BefungeInterpreter {
             this.d = d;
         }
 
-        public char shiftLeft() {
+        public void shiftLeft() {
             int m = code[row].length;
             col = (m + col - 1) % m;
-            return code[row][col];
         }
         
-        public char shiftRight() {
+        public void shiftRight() {
             int m = code[row].length;
             col = (col + 1) % m;
-            return code[row][col];
         }
         
-        public char shiftUp() {
+        public void shiftUp() {
             if (row > 0) {
                 row--;
             } else {
@@ -76,10 +74,9 @@ public class BefungeInterpreter {
                 shiftUp();
             }
 
-            return code[row][col];
         }
         
-        public char shiftDown() {
+        public void shiftDown() {
             if (row < code.length - 1) {
                 row++;
             } else {
@@ -90,24 +87,17 @@ public class BefungeInterpreter {
                 shiftDown();
             }
 
-            return code[row][col];
         }
-
-        public char get() { return code[row][col]; }
 
         public char charAt(int r, int c) { return code[r][c]; }
 
-        public int getRow() { return row; }
-
-        public int getCol() { return col; }
-        
         public void set(char value, int row, int col) { code[row][col] = value; }
     }
 
-    private Stack<Integer> stack;
-    private static HashMap<Character, Consumer<Character>> interpreters = new HashMap<>();
-    private Index index;
-    private StringBuilder result;
+    private final Stack<Integer> stack;
+    private static final HashMap<Character, Consumer<Character>> interpreters = new HashMap<>();
+    private final Index index;
+    private final StringBuilder result;
 
     public BefungeInterpreter() {
         stack = new Stack<>();
@@ -130,9 +120,8 @@ public class BefungeInterpreter {
         interpreters.put('v', this::interpretV);
         interpreters.put('?', this::interpretQuestion);
         interpreters.put('_', this::interpretUnderscore);
-        interpreters.put('_', this::interpretUnderscore);
         interpreters.put('|', this::interpretSlash);
-        interpreters.put('\"', this::interpretDoubleQuot);
+        interpreters.put('\"', c1 -> interpretDoubleQuot());
         interpreters.put(':', this::interpretColon);
         interpreters.put('.', this::interpretDot);
         interpreters.put('\\', this::interpretBackSlash);
@@ -219,12 +208,6 @@ public class BefungeInterpreter {
         stack.push(a == 0 ? 1 : 0);
     }
 
-    private void interpretQuotation(char c) {
-        int a = stack.pop();
-        int b = stack.pop();
-        stack.push(b > a ? 1 : 0);
-    }
-    
     private void interpretGreater(char c) {
         index.setDirection(Direction.RIGHT);
     }
@@ -277,9 +260,10 @@ public class BefungeInterpreter {
         }
     }
 
-    private void interpretDoubleQuot(char c) {
+    private void interpretDoubleQuot() {
+        char c;
         while ((c = index.next()) != '\"') {
-            stack.push((int)c);
+            stack.push((int) c);
         }
     }
     

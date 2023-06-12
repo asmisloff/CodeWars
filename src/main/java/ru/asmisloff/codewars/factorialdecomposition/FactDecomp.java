@@ -1,10 +1,13 @@
-import java.util.stream.IntStream;
-import java.util.*;
+package ru.asmisloff.codewars.factorialdecomposition;
+
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 class FactDecomp {
     
-    private static SortedMap<Integer, Integer> primes = new TreeMap<>();
-    private static StringBuilder sb = new StringBuilder();
+    private static final SortedMap<Integer, Integer> primes = new TreeMap<>();
+    private static final StringBuilder sb = new StringBuilder();
     
     public static String decomp(int n) {
         
@@ -31,7 +34,7 @@ class FactDecomp {
             int pow = e.getValue();
             sb.append(prime);
             if (pow != 1) {
-                sb.append("^" + pow);
+                sb.append("^").append(pow);
             }
             sb.append(" * ");
         }
