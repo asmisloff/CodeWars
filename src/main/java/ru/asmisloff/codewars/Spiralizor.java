@@ -1,7 +1,5 @@
 package ru.asmisloff.codewars;
 
-import org.jetbrains.annotations.NotNull;
-
 public class Spiralizor {
 
     public static int[][] spiralize(int size) {
