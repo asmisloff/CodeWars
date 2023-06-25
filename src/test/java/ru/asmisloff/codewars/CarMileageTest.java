@@ -30,9 +30,9 @@ class CarMileageTest {
             method.setAccessible(true);
             assertEquals(result, method.invoke(CarMileage.class, Integer.toString(number)));
         } catch (
-            NoSuchMethodException |
-            InvocationTargetException |
-            IllegalAccessException e
+            NoSuchMethodException
+            | InvocationTargetException
+            | IllegalAccessException e
         ) {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
