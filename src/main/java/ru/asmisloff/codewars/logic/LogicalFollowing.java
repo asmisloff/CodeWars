@@ -21,7 +21,7 @@ public class LogicalFollowing {
             if (assumptionResult && !conclusionResult) {
                 return false;
             }
-        } while (!next(register));
+        } while (next(register));
         return true;
     }
 
@@ -38,7 +38,7 @@ public class LogicalFollowing {
                 overflow = true;
             }
         }
-        return overflow;
+        return !overflow;
     }
 
     public static boolean impl(boolean a, boolean b) {

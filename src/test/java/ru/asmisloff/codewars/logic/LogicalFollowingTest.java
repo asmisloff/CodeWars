@@ -29,7 +29,7 @@ class LogicalFollowingTest {
             System.out.println(Arrays.toString(actual));
             assertArrayEquals(expected[i], actual);
             ++i;
-        } while (!next(actual));
+        } while (next(actual));
         assertEquals(expected.length, i);
     }
 
